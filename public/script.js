@@ -19,22 +19,28 @@ async function login() {
 
 async function getResult() {
     let roll = document.getElementById("roll").value;
+    let box = document.getElementById("resultBox");
+
+    box.innerHTML = "⏳ Loading...";
 
     let res = await fetch(`/result/${roll}`);
     let data = await res.json();
 
-    let box = document.getElementById("resultBox");
-
     if (data.error) {
-        box.innerHTML = "❌ Result Not Found!";
+        box.innerHTML = `<p style="color:red;">❌ Result Not Found!</p>`;
     } else {
+        let total = data.math + data.science + data.english;
+        let avg = (total / 3).toFixed(2);
+
         box.innerHTML = `
             <h3>${data.name}</h3>
-            <table border="1" width="100%">
+            <table>
                 <tr><th>Subject</th><th>Marks</th></tr>
                 <tr><td>Math</td><td>${data.math}</td></tr>
                 <tr><td>Science</td><td>${data.science}</td></tr>
                 <tr><td>English</td><td>${data.english}</td></tr>
+                <tr><th>Total</th><th>${total}</th></tr>
+                <tr><th>Average</th><th>${avg}</th></tr>
             </table>
         `;
     }
