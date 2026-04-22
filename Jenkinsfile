@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone Code') {
             steps {
-                git 'https://github.com/devronjonroyapu/student-result-portal.git'
+                git branch: 'main', url: 'https://github.com/devronjonroyapu/student-result-portal.git'
             }
         }
 
